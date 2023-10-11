@@ -1,0 +1,21 @@
+<!-- Home page -->
+<div class="container">
+  <% if(projects.length> 0){ %> <% for(project of projects){ %>
+      <a href="/projectdetails/<%=project.id%>" class="card">
+        <div class="card_content">
+          <div class="card_title">
+            <%= project.title%>
+          </div>
+          <div class="card_author">
+            <%= project.author%>
+          </div>
+          <p class="card_desc">
+            <%= project.description%>
+          </p>
+        </div>
+      </a>
+  <% }%>
+  <%}else{%>
+      <h3 class="text-info">No Projects Yet!</h3>
+  <%}%>
+</div>

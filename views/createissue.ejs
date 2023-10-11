@@ -1,0 +1,40 @@
+<!-- create issue container -->
+<div class="container">
+  <div class="createProject_card">
+    <h2 class="createProject-title">Create Issue</h2>
+    <form method="POST" action="/createIssue/<%= projectId.id%>" class="createProject-form">
+      <div class="input">
+        <label for="issueTitle" class="label">Title</label>
+        <input name="issueTitle" class="title_input inputClass" placeholder="Title" type="text" required />
+      </div>
+
+      <div class="input">
+        <label for="issueLabel" class="w-25">Add Label</label>
+
+        <div class="w-75">
+          <select id="issueLabel" multiple name="issueLabel" class="form-select" aria-label="Default select example"
+            required>
+            <option value="Bug">Bug</option>
+            <option value="UI">UI</option>
+            <option value="Nodejs">Nodejs</option>
+            <option value="react">react</option>
+            <option value="High">High</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input">
+        <label for="issueAuthor" class="label">Author</label>
+        <input name="issueAuthor" class="author_input inputClass" placeholder="Author" type="text" required />
+      </div>
+      <div class="input">
+        <label for="issueDesc" class="label">Description</label>
+        <textarea name="issueDesc" class="desc_textarea inputClass" placeholder="Description..." rows="2"
+          required></textarea>
+      </div>
+
+      <button type="submit" class="submitBtn">Create Issue</button>
+    </form>
+  </div>
+</div>

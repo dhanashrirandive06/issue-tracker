@@ -1,0 +1,23 @@
+<!-- create Project container -->
+<div class="container">
+  <div class="createProject_card">
+    <h2 class="createProject-title">Create Project</h2>
+    <form method="POST" action="/create" class="createProject-form">
+      <div class="input">
+        <label for="title" class="label">Title</label>
+        <input id="title" name="title" class="title_input inputClass" placeholder="Title" type="text" required />
+      </div>
+      <div class="input">
+        <label for="author" class="label">Author</label>
+        <input id="author" name="author" class="author_input inputClass" placeholder="Author" type="text" required />
+      </div>
+      <div class="input">
+        <label for="description" class="label">Description</label>
+        <textarea id="description" name="description" class="desc_textarea inputClass" placeholder="Description..."
+          rows="5" required></textarea>
+      </div>
+
+      <button type="submit" class="submitBtn">Create Project</button>
+    </form>
+  </div>
+</div>

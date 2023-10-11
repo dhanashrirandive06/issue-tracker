@@ -1,0 +1,168 @@
+<!-- Project Details page -->
+<div class="container">
+  <div class="project_card">
+    <div class="card_content">
+      <div class="content-heading">
+        <div class="card_title">
+          <%= projectDetails.title %>
+        </div>
+        <div class="card_author">
+          <%= projectDetails.author %>
+        </div>
+      </div>
+      <p class="project_card_desc">
+        <%= projectDetails.description %>
+      </p>
+
+      <div class="project_card_createIssue">
+        <h5 class="project_card_issueHeading">Issues</h5>
+        <a href="/createIssue/<%=projectDetails.id%>" class="createIssue_btn">
+          <i class="fa-solid fa-plus"></i><span class="createIssue_btn_span">Create Issue</span>
+        </a>
+      </div>
+
+      <div class="project_card_searchIssue border-bottom pb-4">
+        <a href="/projectdetails/<%=projectDetails.id%>/showAll" class="createIssue_btn">
+          <span class="createIssue_btn_span">Show All Issue</span>
+        </a>
+
+        <!-- Filter issue -->
+        <div class="createIssue_btn" data-bs-toggle="modal" data-bs-target="#filter-issue">
+          <span class="createIssue_btn_span">Filter Issue</span>
+        </div>
+
+        <!-- Filter issue Modal -->
+        <div class="modal fade" id="filter-issue" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Filter Issue
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/projectdetails/<%=projectDetails.id%>/filterIssue" method="post">
+                <div class="modal-body">
+                  <div class="modal_filterByLabel d-flex justify-content-start border-bottom py-3">
+                    <label class="w-50">Filter By Label</label>
+                    <div class="modal_filterLabelInput w-50">
+                      <% for(issue of projectDetails.issues){ %>
+                        <% for(label of issue.issueLabel){%>
+                          <div class="form-check">
+                            <input name="label" class="form-check-input" type="checkbox" value="<%= label%>"
+                              id="flexCheckDefault" />
+                            <label class="form-check-label" for="flexCheckDefault">
+                              <%= label%>
+                            </label>
+                          </div>
+                          <%} %>
+                            <%} %>
+                    </div>
+                  </div>
+
+                  <div class="modal_filterByLabel d-flex justify-content-start py-3">
+                    <label class="w-50">Filter By Author</label>
+                    <div class="modal_filterLabelInput w-50">
+                      <% for(issue of projectDetails.issues){%>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="author" value="<%=issue.issueAuthor %>"
+                            id="flexRadioDefault1" />
+                          <label class="form-check-label" for="flexRadioDefault1">
+                            <%= issue.issueAuthor%>
+                          </label>
+                        </div>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Filter Issue
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search issue -->
+        <div class="createIssue_btn" data-bs-toggle="modal" data-bs-target="#search-issue">
+          <span class="createIssue_btn_span">Search Issue</span>
+        </div>
+
+        <!-- Search issue Modal -->
+        <div class="modal fade" id="search-issue" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  Search Issue
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form action="/projectdetails/<%=projectDetails.id%>/searchIssue" method="post">
+                <div class="modal-body">
+                  <div class="mb-3 row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                      <input name="inputTitle" type="text" class="form-control" id="inputTitle" />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputDesc" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                      <input name="inputDesc" type="text" class="form-control" id="inputDesc" />
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Filter Issue
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="issue_container">
+        <% if(issues.length> 0){ %> <% for(issue of issues){ %>
+            <div class="issue_row blue">
+              <div class="issue_row_content">
+                <div class="issue_title">
+                  <%= issue.issueTitle %>
+                </div>
+                <div class="issue_author">
+                  <%= issue.issueAuthor %>
+                </div>
+              </div>
+              <div class="issue_desc">
+                <p class="text-break">
+                  <%= issue.issueDesc %>
+                </p>
+              </div>
+              <div class="issue_label">
+                <%for(label of issue.issueLabel){ %>
+                  <div class="issue_label_class">
+                    <%= label %>
+                  </div>
+                  <%}%>
+              </div>
+            </div>
+      <%}%>
+      <%}else{%>
+        <div class="project_card_noIssueHeading">
+          <h5 class="project_card_issueHeading">NO ISSUES YET!</h5>
+        </div>
+      <%}%>
+      </div>
+    </div>
+  </div>
+</div>
