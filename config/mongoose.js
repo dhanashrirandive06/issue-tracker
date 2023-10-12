@@ -1,6 +1,8 @@
 // import mongoose from mongoose libary
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/issue_tracker");
+mongoose.connect(
+  "mongodb+srv://dhanashrirandive06:dhanashrirandive06@cluster0.xuslq8l.mongodb.net/"
+);
 const db = mongoose.connection;
 
 // printing error if any error occurred while connecting with database
@@ -11,5 +13,5 @@ db.once("open", () => {
   console.log("Connected to Mongodb ");
 });
 
-// export db 
+// export db
 module.exports = db;
