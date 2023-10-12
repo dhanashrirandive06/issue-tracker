@@ -81,7 +81,7 @@ module.exports.createIssue = async (req, res) => {
 
   await project.save();
 
-  return res.render("projectDetails", {
+  return res.render("projectdetails", {
     title: "Project Details",
     projectId: id,
     projectDetails: project,
@@ -93,7 +93,7 @@ module.exports.createIssue = async (req, res) => {
 module.exports.showAll = async (req, res) => {
   const { id } = req.params;
   const project = await Project.findById(id);
-  return res.render("projectDetails", {
+  return res.render("projectdetails", {
     title: "Details",
     projectId: id,
     projectDetails: project,
@@ -124,7 +124,7 @@ module.exports.filterIssue = async (req, res) => {
   });
 
   const issues = [...issues1, ...issues2];
-  return res.render("projectDetails", {
+  return res.render("projectdetails", {
     title: "Details",
     projectId: id,
     projectDetails: project,
@@ -157,7 +157,7 @@ module.exports.searchIssue = async (req, res) => {
 
   const issues = [...issues1, ...issues2];
 
-  return res.render("projectDetails", {
+  return res.render("projectdetails", {
     title: "Details",
     projectId: id,
     projectDetails: project,
