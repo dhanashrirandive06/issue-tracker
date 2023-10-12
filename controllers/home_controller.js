@@ -58,6 +58,7 @@ module.exports.projectdetails = async (req, res) => {
     const project = await Project.findById(id);
     return res.render("projectdetails", {
       title: "projectdetails",
+      projectId: id,
       projectDetails: project,
       issues: project.issues,
     });
