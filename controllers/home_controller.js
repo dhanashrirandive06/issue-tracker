@@ -44,7 +44,7 @@ module.exports.create = async (req, res) => {
 
 //redirect to createissue page
 module.exports.createissue = (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
   return res.render("createissue", {
     title: "Create issue",
     projectId: id,
@@ -69,98 +69,114 @@ module.exports.projectdetails = async (req, res) => {
 
 //create Issue and redirect to project details page
 module.exports.createIssue = async (req, res) => {
-  const { id } = req.params;
-  const project = await Project.findById(id);
+  try {
+    const { id } = req.params;
+    const project = await Project.findById(id);
 
-  project.issues.push({
-    issueTitle: req.body.issueTitle,
-    issueAuthor: req.body.issueAuthor,
-    issueDesc: req.body.issueDesc,
-    issueLabel: req.body.issueLabel,
-  });
+    project.issues.push({
+      issueTitle: req.body.issueTitle,
+      issueAuthor: req.body.issueAuthor,
+      issueDesc: req.body.issueDesc,
+      issueLabel: req.body.issueLabel,
+    });
 
-  await project.save();
+    await project.save();
 
-  return res.render("projectdetails", {
-    title: "Project Details",
-    projectId: id,
-    projectDetails: project,
-    issues: project.issues,
-  });
+    return res.render("projectdetails", {
+      title: "Project Details",
+      projectId: id,
+      projectDetails: project,
+      issues: project.issues,
+    });
+  } catch (error) {
+    console.log("Error in create Project", error);
+  }
 };
 
 //show all the issues on projectDetails page
 module.exports.showAll = async (req, res) => {
-  const { id } = req.params;
-  const project = await Project.findById(id);
-  return res.render("projectdetails", {
-    title: "Details",
-    projectId: id,
-    projectDetails: project,
-    issues: project.issues,
-  });
+  try {
+    const { id } = req.params;
+    const project = await Project.findById(id);
+    return res.render("projectdetails", {
+      title: "Details",
+      projectId: id,
+      projectDetails: project,
+      issues: project.issues,
+    });
+  } catch (error) {
+    console.log("Error in create Project", error);
+  }
 };
 
 //filter issues by label or author
 module.exports.filterIssue = async (req, res) => {
-  const { id } = req.params;
-  const { label, author } = req.body;
-  const project = await Project.findById(id);
-  const issues1 = project.issues.filter((issue) => {
-    let isContain = false;
-    issue.issueLabel.forEach((element) => {
-      if (label.includes(element)) {
-        isContain = true;
+  try {
+    const { id } = req.params;
+    const { label, author } = req.body;
+    const project = await Project.findById(id);
+    const issues1 = project.issues.filter((issue) => {
+      let isContain = false;
+      issue.issueLabel.forEach((element) => {
+        if (label?.includes(element)) {
+          isContain = true;
+        }
+      });
+      if (isContain) {
+        return issue;
       }
     });
-    if (isContain) {
-      return issue;
-    }
-  });
-  const issues2 = project.issues.filter((issue) => {
-    if (issue.issueAuthor.includes(author)) {
-      return issue;
-    }
-  });
+    const issues2 = project.issues.filter((issue) => {
+      if (issue.issueAuthor?.includes(author)) {
+        return issue;
+      }
+    });
 
-  const issues = [...issues1, ...issues2];
-  return res.render("projectdetails", {
-    title: "Details",
-    projectId: id,
-    projectDetails: project,
-    issues: issues,
-  });
+    const issues = [...issues1, ...issues2];
+    return res.render("projectdetails", {
+      title: "Details",
+      projectId: id,
+      projectDetails: project,
+      issues: issues,
+    });
+  } catch (error) {
+    console.log("Error in create Project", error);
+  }
 };
 
 //search issue by issue Title or issue Description
 module.exports.searchIssue = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const project = await Project.findById(id);
+    const project = await Project.findById(id);
 
-  const issues1 = project.issues.filter((issue) => {
-    const title = issue.issueTitle.toLowerCase();
-    const inputTitle = req.body.inputTitle.toLowerCase();
-    const isTitle = title.includes(inputTitle);
-    if (isTitle) {
-      return issue;
-    }
-  });
-  const issues2 = project.issues.filter((issue) => {
-    const desc = issue.issueDesc.toLowerCase();
-    const inputDesc = req.body.inputDesc.toLowerCase();
-    const isDesc = desc.includes(inputDesc);
-    if (isDesc) {
-      return issue;
-    }
-  });
+    const issues1 = project.issues.filter((issue) => {
+      const title = issue.issueTitle.toLowerCase();
+      const inputTitle = req.body.inputTitle.toLowerCase();
+      const isTitle = title?.includes(inputTitle);
+      if (isTitle) {
+        return issue;
+      }
+    });
+    const issues2 = project.issues.filter((issue) => {
+      const desc = issue.issueDesc.toLowerCase();
+      const inputDesc = req.body.inputDesc.toLowerCase();
+      const isDesc = desc?.includes(inputDesc);
+      if (isDesc) {
+        return issue;
+      }
+    });
 
-  const issues = [...issues1, ...issues2];
+    const issues = [...issues1, ...issues2];
 
-  return res.render("projectdetails", {
-    title: "Details",
-    projectId: id,
-    projectDetails: project,
-    issues: issues,
-  });
+    return res.render("projectdetails", {
+      title: "Details",
+      projectId: id,
+      projectDetails: project,
+      issues: issues,
+    });
+  } catch (error) {
+    console.log("Error in create Project", error);
+  }
 };
