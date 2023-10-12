@@ -89,7 +89,7 @@ module.exports.createIssue = async (req, res) => {
       issues: project.issues,
     });
   } catch (error) {
-    console.log("Error in create Project", error);
+    console.log("Error in create Issue", error);
   }
 };
 
@@ -105,7 +105,7 @@ module.exports.showAll = async (req, res) => {
       issues: project.issues,
     });
   } catch (error) {
-    console.log("Error in create Project", error);
+    console.log("Error in Show All issue", error);
   }
 };
 
@@ -140,7 +140,7 @@ module.exports.filterIssue = async (req, res) => {
       issues: issues,
     });
   } catch (error) {
-    console.log("Error in create Project", error);
+    console.log("Error in Filter Issue", error);
   }
 };
 
@@ -152,16 +152,16 @@ module.exports.searchIssue = async (req, res) => {
     const project = await Project.findById(id);
 
     const issues1 = project.issues.filter((issue) => {
-      const title = issue.issueTitle.toLowerCase();
-      const inputTitle = req.body.inputTitle.toLowerCase();
+      const title = issue.issueTitle?.toLowerCase();
+      const inputTitle = req.body.inputTitle?.toLowerCase();
       const isTitle = title?.includes(inputTitle);
       if (isTitle) {
         return issue;
       }
     });
     const issues2 = project.issues.filter((issue) => {
-      const desc = issue.issueDesc.toLowerCase();
-      const inputDesc = req.body.inputDesc.toLowerCase();
+      const desc = issue.issueDesc?.toLowerCase();
+      const inputDesc = req.body.inputDesc?.toLowerCase();
       const isDesc = desc?.includes(inputDesc);
       if (isDesc) {
         return issue;
@@ -177,6 +177,6 @@ module.exports.searchIssue = async (req, res) => {
       issues: issues,
     });
   } catch (error) {
-    console.log("Error in create Project", error);
+    console.log("Error in Search Issue", error);
   }
 };
